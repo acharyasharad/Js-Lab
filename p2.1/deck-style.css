@@ -1,0 +1,29 @@
+/* Deck demo styles — product list with bill summary */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+:root{ --bg:#f3f4f6; --card:#fff; --accent:#0b5cff; --muted:#6b7280; --border:#e6eef8; --radius:12px }
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Arial;background:var(--bg);margin:0;color:#0f1724}
+.container{max-width:1100px;margin:28px auto;padding:18px}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.brand{font-weight:700;font-size:1.2rem}
+.layout{display:grid;grid-template-columns:1fr 340px;gap:20px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+.products-panel{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+.products-panel h3{margin:0 0 12px 0}
+.product-row{display:flex;align-items:center;gap:12px;padding:16px;border-radius:10px;border:1px solid var(--border);margin-bottom:12px;background:#fbfcfd}
+.product-thumb{width:64px;height:64px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.product-thumb img{width:100%;height:100%;object-fit:cover}
+.product-info{flex:1}
+.product-title{font-weight:700;font-size:1.02rem}
+.product-desc{color:var(--muted);font-size:0.92rem;margin-top:6px}
+.product-meta{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.price{font-weight:800;color:#0b1220}
+.qty-box{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.qty-input{width:76px;padding:8px;border-radius:8px;border:1px solid #e4e7eb;text-align:center}
+.sidebar{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 18px rgba(2,6,23,0.06);height:fit-content}
+.sidebar h3{margin:0 0 12px 0}
+.summary-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed #f0f3f8}
+.summary-row.total{font-weight:800;font-size:1.05rem;border-bottom:none}
+.calc-btn{display:block;width:100%;padding:12px;background:var(--accent);color:white;border-radius:10px;border:none;font-weight:700;margin-top:14px}
+.note{color:var(--muted);font-size:0.9rem;margin-top:10px}
+.footer-link{display:block;margin-top:10px;color:var(--accent);text-decoration:underline}

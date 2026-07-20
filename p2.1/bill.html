@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bill - TechShop</title>
+  <style>
+    body{font-family:Inter,system-ui,Arial;background:#f7fafc;padding:20px;color:#07102a}
+    .receipt{max-width:720px;margin:0 auto;background:#fff;padding:18px;border-radius:10px;box-shadow:0 8px 24px rgba(2,6,23,0.06)}
+    .items{margin-top:12px}
+    .item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f3f7}
+    .totals{margin-top:12px;text-align:right;font-weight:700}
+    .actions{text-align:right;margin-top:16px}
+    button{padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="receipt">
+    <h2>Order Bill</h2>
+    <div id="items" class="items"></div>
+    <div class="totals">
+      <div>Subtotal: <span id="subtotal">₹0.00</span></div>
+      <div>GST (18%): <span id="gst">₹0.00</span></div>
+      <div style="font-size:1.1rem;margin-top:6px">Total: <span id="total">₹0.00</span></div>
+    </div>
+    <div class="actions">
+      <button id="print">Print</button>
+      <button id="close">Close</button>
+    </div>
+  </div>
+
+<script>
+  const raw = localStorage.getItem('techshop_bill');
+  if(!raw){ document.getElementById('items').textContent = 'No bill data found.'; }
+  else{
+    try{
+      const data = JSON.parse(raw);
+      const itemsEl = document.getElementById('items');
+      data.items.forEach(it=>{
+        const el = document.createElement('div'); el.className='item';
+        el.innerHTML = `<div>${it.name} <small style="color:#6b7280">(x${it.qty})</small></div><div>₹${(it.price*it.qty).toLocaleString('en-IN')}</div>`;
+        itemsEl.appendChild(el);
+      });
+      document.getElementById('subtotal').textContent = '₹' + data.subtotal.toLocaleString('en-IN', {minimumFractionDigits:2});
+      document.getElementById('gst').textContent = '₹' + data.gst.toLocaleString('en-IN', {minimumFractionDigits:2});
+      document.getElementById('total').textContent = '₹' + data.total.toLocaleString('en-IN', {minimumFractionDigits:2});
+    }catch(e){ document.getElementById('items').textContent = 'Invalid bill data.'; }
+  }
+  document.getElementById('print').addEventListener('click', ()=> window.print());
+  document.getElementById('close').addEventListener('click', ()=> window.close());
+</script>
+</body>
+</html>

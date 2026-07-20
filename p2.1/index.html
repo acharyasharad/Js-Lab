@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TechShop — Minimal Electronics Store</title>
+    <meta name="description" content="Minimal electronics shop demo with bill calculation and GST" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <div class="brand">TechShop</div>
+        <div class="tag">Minimal electronics — simple checkout</div>
+      </header>
+
+      <div class="hero">
+        <h1>Tech made simple</h1>
+        <p class="lead">Select laptops, components and accessories — calculate GST and print a clean bill.</p>
+      </div>
+
+      <main class="layout">
+        <section class="products" id="products">
+          <!-- product items rendered by JS -->
+        </section>
+
+        <aside class="bill">
+          <h2>Bill Summary</h2>
+          <div class="line"><span>Subtotal</span><span id="subtotal">₹0.00</span></div>
+          <div class="line"><span>GST (18%)</span><span id="gst">₹0.00</span></div>
+          <div class="line total"><span>Total</span><span id="total">₹0.00</span></div>
+          <button id="calculate" class="btn primary">Calculate</button>
+          <button id="checkout" class="btn">Checkout (Open Bill)</button>
+        </aside>
+      </main>
+
+      <footer class="footer">24070521027 J Sharadvardhan Acharya</footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

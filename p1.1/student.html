@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Student Information Portal</title>
+
+
+<style>
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+}
+
+
+.header{
+    text-align:center;
+    padding:20px;
+    background:#eeeeee;
+    border-bottom:1px solid #ccc;
+}
+
+
+.container{
+
+    width:400px;
+    margin:30px auto;
+    background:white;
+    padding:25px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    text-align:center;
+
+}
+
+
+input{
+
+    width:90%;
+    padding:8px;
+    margin:8px 0 15px;
+    border:1px solid #aaa;
+    border-radius:4px;
+
+}
+
+
+button{
+
+    padding:8px 25px;
+    background:#333;
+    color:white;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+
+}
+
+
+button:hover{
+
+    background:#555;
+
+}
+
+
+
+table{
+
+    width:85%;
+    margin:30px auto;
+    border-collapse:collapse;
+    background:white;
+
+}
+
+
+table,th,td{
+
+    border:1px solid #999;
+
+}
+
+
+th,td{
+
+    padding:12px;
+    text-align:center;
+
+}
+
+
+th{
+
+    background:#e6e6e6;
+
+}
+
+
+
+a{
+
+    display:block;
+    width:180px;
+    margin:20px auto;
+    padding:8px;
+    text-align:center;
+    text-decoration:none;
+    color:black;
+    border:1px solid black;
+    border-radius:4px;
+    background:white;
+
+}
+
+
+a:hover{
+
+    background:#eeeeee;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="header">
+
+<h1>Student Information Portal</h1>
+
+<p>SIT Nagpur - Computer Science Department</p>
+
+</div>
+
+
+
+
+<div class="container">
+
+
+<label>PRN</label><br>
+<input type="text" id="prn">
+
+
+<label>Name</label><br>
+<input type="text" id="name">
+
+
+<label>Semester</label><br>
+<input type="text" id="semester">
+
+
+<label>GPA</label><br>
+<input type="number" id="gpa" step="0.01">
+
+
+
+<br>
+
+<button onclick="addStudent()">
+Submit
+</button>
+
+
+</div>
+
+
+
+
+<table id="studentTable">
+
+
+<tr>
+
+<th>PRN</th>
+<th>Name</th>
+<th>Semester</th>
+<th>GPA</th>
+
+</tr>
+
+
+</table>
+
+
+
+
+<a href="index.html">
+Back to Department
+</a>
+
+
+
+
+
+<script>
+
+function addStudent()
+{
+
+var prn=document.getElementById("prn").value;
+var name=document.getElementById("name").value;
+var semester=document.getElementById("semester").value;
+var gpa=document.getElementById("gpa").value;
+
+
+
+var table=document.getElementById("studentTable");
+
+
+var row=table.insertRow(-1);
+
+
+
+row.insertCell(0).innerHTML=prn;
+row.insertCell(1).innerHTML=name;
+row.insertCell(2).innerHTML=semester;
+row.insertCell(3).innerHTML=gpa;
+
+
+
+console.log("PRN : "+prn);
+console.log("Name : "+name);
+console.log("Semester : "+semester);
+console.log("GPA : "+gpa);
+
+
+
+document.getElementById("prn").value="";
+document.getElementById("name").value="";
+document.getElementById("semester").value="";
+document.getElementById("gpa").value="";
+
+
+}
+
+</script>
+
+
+
+</body>
+
+</html>
