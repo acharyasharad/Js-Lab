@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehicle Registration Validator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="card">
+      <h1>Vehicle Registration Validator</h1>
+      <p>Enter an Indian vehicle registration number to check its format.</p>
+
+      <label for="registrationNumber">Registration Number</label>
+      <input
+        id="registrationNumber"
+        type="text"
+        placeholder="MH12AB1234"
+        autocomplete="off"
+      />
+
+      <div class="buttons">
+        <button id="validateBtn" type="button">Validate</button>
+        <button id="resetBtn" type="button" class="reset-btn">Reset</button>
+      </div>
+
+      <div id="result" class="result" aria-live="polite"></div>
+    </div>
+
+    <footer class="footer">
+      <p>J Sharadvardhan Acharya</p>
+      <p>24070521027</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

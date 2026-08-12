@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Tools</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+    }
+    .container {
+      max-width: 720px;
+      margin: 20px auto;
+      padding: 16px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.9rem;
+      color: #1e3a7b;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #2f5db3;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 5px rgba(47, 93, 179, 0.08);
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    textarea,
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #7c9ed7;
+      border-radius: 8px;
+      background: #f7f9ff;
+      color: #1a1a1a;
+      font-size: 1rem;
+    }
+    textarea {
+      resize: vertical;
+    }
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background: #2f5db3;
+      color: white;
+      padding: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #1f4688;
+    }
+    .field-row {
+      display: grid;
+      gap: 10px;
+    }
+    .action-result {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f2f4ff;
+      color: #1a1a1a;
+      min-height: 70px;
+      white-space: pre-wrap;
+    }
+    @media (max-width: 520px) {
+      .container {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Text Tools</h1>
+    </header>
+
+    <section class="card">
+      <label for="inputPara">Enter paragraph</label>
+      <textarea id="inputPara" rows="6" placeholder="Type your paragraph here..."></textarea>
+    </section>
+
+    <section class="card action-card">
+      <button id="showOriginal">Original paragraph</button>
+      <div class="action-result" id="resultOriginal">Result appears here.</div>
+    </section>
+
+    <section class="card action-card">
+      <button id="findVowels">Find all vowels</button>
+      <div class="action-result" id="resultVowels">Result appears here.</div>
+    </section>
+
+    <section class="card action-card">
+      <div class="field-row">
+        <input id="replaceWord" placeholder="Word to replace" />
+        <input id="replaceWith" placeholder="Replace with" />
+      </div>
+      <button id="doReplace">Replace word</button>
+      <div class="action-result" id="resultReplace">Result appears here.</div>
+    </section>
+
+    <section class="card action-card">
+      <input id="searchWord" placeholder="Search word" />
+      <button id="findPosition">Position of word</button>
+      <div class="action-result" id="resultPosition">Result appears here.</div>
+    </section>
+
+    <section class="card action-card">
+      <button id="validateEmail">Validate email</button>
+      <div class="action-result" id="resultValidate">Result appears here.</div>
+    </section>
+
+    <section class="card action-card">
+      <button id="extractEmail">Extract email</button>
+      <div class="action-result" id="resultExtract">Result appears here.</div>
+    </section>
+
+    <section class="card action-card">
+      <button id="reversePara">Reverse paragraph</button>
+      <div class="action-result" id="resultReverse">Result appears here.</div>
+    </section>
+  </div>
+
+  <script>
+    const inputPara = document.getElementById('inputPara');
+
+    const elements = {
+      original: document.getElementById('resultOriginal'),
+      vowels: document.getElementById('resultVowels'),
+      replace: document.getElementById('resultReplace'),
+      position: document.getElementById('resultPosition'),
+      validate: document.getElementById('resultValidate'),
+      extract: document.getElementById('resultExtract'),
+      reverse: document.getElementById('resultReverse'),
+    };
+
+    const buttons = {
+      showOriginal: document.getElementById('showOriginal'),
+      findVowels: document.getElementById('findVowels'),
+      doReplace: document.getElementById('doReplace'),
+      findPosition: document.getElementById('findPosition'),
+      validateEmail: document.getElementById('validateEmail'),
+      extractEmail: document.getElementById('extractEmail'),
+      reversePara: document.getElementById('reversePara'),
+    };
+
+    function getText() {
+      return inputPara.value.trim();
+    }
+
+    function showResult(key, text) {
+      elements[key].textContent = text;
+    }
+
+    buttons.showOriginal.addEventListener('click', () => {
+      const text = getText();
+      showResult('original', text || 'Enter a paragraph first.');
+    });
+
+    buttons.findVowels.addEventListener('click', () => {
+      const text = getText();
+      if (!text) return showResult('vowels', 'Enter a paragraph first.');
+      const vowels = text.match(/[aeiou]/gi) || [];
+      const unique = [...new Set(vowels.map(v => v.toLowerCase()))].join(', ');
+      showResult('vowels', `Vowels found: ${vowels.length}\nAll vowels: ${vowels.join(', ') || 'None'}\nUnique vowels: ${unique || 'None'}`);
+    });
+
+    buttons.doReplace.addEventListener('click', () => {
+      const text = getText();
+      const target = document.getElementById('replaceWord').value.trim();
+      const replacement = document.getElementById('replaceWith').value;
+      if (!text) return showResult('replace', 'Enter a paragraph first.');
+      if (!target) return showResult('replace', 'Enter a word to replace.');
+      const regex = new RegExp(target.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&'), 'gi');
+      const replaced = text.replace(regex, replacement);
+      showResult('replace', `Updated paragraph:\n${replaced}`);
+    });
+
+    buttons.findPosition.addEventListener('click', () => {
+      const text = getText();
+      const word = document.getElementById('searchWord').value.trim();
+      if (!text) return showResult('position', 'Enter a paragraph first.');
+      if (!word) return showResult('position', 'Enter a word to search.');
+      const regex = new RegExp(`\\b${word.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')}\\b`, 'gi');
+      const positions = [];
+      let match;
+      while ((match = regex.exec(text)) !== null) {
+        positions.push(match.index + 1);
+      }
+      showResult('position', positions.length ? `Word "${word}" at: ${positions.join(', ')}` : `Word "${word}" not found.`);
+    });
+
+    buttons.validateEmail.addEventListener('click', () => {
+      const text = getText();
+      if (!text) return showResult('validate', 'Enter a paragraph first.');
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const lines = text.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+      const validEmails = lines.filter(line => emailRegex.test(line));
+      showResult('validate', validEmails.length ? `Valid email(s):\n${validEmails.join('\n')}` : 'No valid email found.');
+    });
+
+    buttons.extractEmail.addEventListener('click', () => {
+      const text = getText();
+      if (!text) return showResult('extract', 'Enter a paragraph first.');
+      const extractRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+      const found = text.match(extractRegex) || [];
+      showResult('extract', found.length ? `Extracted emails:\n${found.join('\n')}` : 'No email addresses found.');
+    });
+
+    buttons.reversePara.addEventListener('click', () => {
+      const text = getText();
+      if (!text) return showResult('reverse', 'Enter a paragraph first.');
+      showResult('reverse', text.split('').reverse().join(''));
+    });
+  </script>
+</body>
+</html>

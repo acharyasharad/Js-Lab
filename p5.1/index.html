@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find Max and Min</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eef2ff;
+        color: #0f172a;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        width: min(100%, 420px);
+        background: white;
+        padding: 28px;
+        border-radius: 20px;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+      }
+
+      h1 {
+        margin: 0 0 16px;
+        font-size: 1.8rem;
+      }
+
+      p {
+        margin: 10px 0;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid #cbd5e1;
+        font-size: 1rem;
+      }
+
+      button {
+        margin-top: 16px;
+        width: 100%;
+        padding: 12px 16px;
+        color: white;
+        background: #4338ca;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .box {
+        margin-top: 18px;
+        padding: 16px;
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 16px 35px rgba(15, 23, 42, 0.08);
+      }
+
+      .box + .box {
+        margin-top: 14px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 10px 12px;
+      }
+
+      .footer {
+        margin-top: 20px;
+        text-align: center;
+        color: #475569;
+        font-size: 0.95rem;
+        letter-spacing: 0.02em;
+      }
+
+      thead {
+        background: #f8fafc;
+      }
+
+      th {
+        font-weight: 700;
+      }
+
+      tr:nth-child(even) {
+        background: #f8fafc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Student Attendance Tracker</h1>
+
+      <div class="fields">
+        <div class="field">
+          <label for="studentName">Student Name</label>
+          <input id="studentName" type="text"  />
+        </div>
+        <div class="field">
+          <label for="studentAttendance">Attendance</label>
+          <input id="studentAttendance" type="number" min="0"  />
+        </div>
+      </div>
+
+      <button id="addButton">Add Student</button>
+
+      <div class="box">
+        <h2>Attendance Records</h2>
+        <table id="attendanceTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Attendance</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="box">
+        <h2>Attendance Summary</h2>
+        <table id="summaryTable">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Attendance</th>
+              <th>Student(s)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="footer">J sharadvardhan acharya 24070521027</div>
+    </div>
+
+    <script>
+      const nameInput = document.getElementById('studentName');
+      const attendanceInput = document.getElementById('studentAttendance');
+      const addButton = document.getElementById('addButton');
+      const tableBody = document.querySelector('#attendanceTable tbody');
+      const summaryBody = document.querySelector('#summaryTable tbody');
+
+      const students = [];
+
+      function renderTable() {
+        const sortedStudents = [...students].sort((a, b) => a.name.localeCompare(b.name));
+        tableBody.innerHTML = '';
+        summaryBody.innerHTML = '';
+
+        sortedStudents.forEach((student) => {
+          const row = document.createElement('tr');
+          const nameCell = document.createElement('td');
+          const attendanceCell = document.createElement('td');
+
+          nameCell.textContent = student.name;
+          attendanceCell.textContent = student.attendance;
+
+          row.appendChild(nameCell);
+          row.appendChild(attendanceCell);
+          tableBody.appendChild(row);
+        });
+
+        if (students.length === 0) {
+          const emptyRow = document.createElement('tr');
+          const emptyCell = document.createElement('td');
+          emptyCell.setAttribute('colspan', '3');
+          emptyCell.textContent = 'No attendance records yet.';
+          emptyCell.style.textAlign = 'center';
+          emptyRow.appendChild(emptyCell);
+          summaryBody.appendChild(emptyRow);
+          return;
+        }
+
+        const attendanceValues = students.map((student) => student.attendance);
+        const maxAttendance = Math.max(...attendanceValues);
+        const minAttendance = Math.min(...attendanceValues);
+
+        const maxStudents = students
+          .filter((student) => student.attendance === maxAttendance)
+          .map((student) => student.name);
+        const minStudents = students
+          .filter((student) => student.attendance === minAttendance)
+          .map((student) => student.name);
+
+        const maxRow = document.createElement('tr');
+        const maxType = document.createElement('td');
+        const maxValue = document.createElement('td');
+        const maxNames = document.createElement('td');
+        maxType.textContent = 'Maximum';
+        maxValue.textContent = maxAttendance;
+        maxNames.textContent = maxStudents.join(', ');
+        maxRow.appendChild(maxType);
+        maxRow.appendChild(maxValue);
+        maxRow.appendChild(maxNames);
+
+        const minRow = document.createElement('tr');
+        const minType = document.createElement('td');
+        const minValue = document.createElement('td');
+        const minNames = document.createElement('td');
+        minType.textContent = 'Minimum';
+        minValue.textContent = minAttendance;
+        minNames.textContent = minStudents.join(', ');
+        minRow.appendChild(minType);
+        minRow.appendChild(minValue);
+        minRow.appendChild(minNames);
+
+        summaryBody.appendChild(maxRow);
+        summaryBody.appendChild(minRow);
+      }
+
+      function addStudent() {
+        const name = nameInput.value.trim();
+        const attendance = Number(attendanceInput.value);
+
+        if (!name || attendanceInput.value === '' || Number.isNaN(attendance) || attendance < 0) {
+          alert('Please enter a valid student name and attendance count.');
+          return;
+        }
+
+        students.push({ name, attendance });
+        nameInput.value = '';
+        attendanceInput.value = '';
+        nameInput.focus();
+        renderTable();
+      }
+
+      addButton.addEventListener('click', addStudent);
+
+      attendanceInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          addStudent();
+        }
+      });
+    </script>
+  </body>
+</html>
