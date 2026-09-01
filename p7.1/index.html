@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <main class="page">
+        <div class="document-surface">
+          <div class="paper">
+            <form id="registrationForm" class="reg-form" novalidate>
+              <div class="required-note">*Mandatory to fill</div>
+
+              <div class="field-row">
+                <label for="firstname">Firstname:</label>
+                <div class="input-box">
+                  <input id="firstname" name="firstname" type="text" />
+                  <span class="required-star">*</span>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <label for="lastname">Lastname:</label>
+                <div class="input-box">
+                  <input id="lastname" name="lastname" type="text" />
+                  <span class="required-star">*</span>
+                </div>
+              </div>
+
+              <div class="field-row birthday-row">
+                <label>Birthday:</label>
+                <div class="date-box">
+                  <div class="select-wrap">
+                    <select id="day" name="day">
+                      <option value=""> </option>
+                    </select>
+                  </div>
+                  <div class="select-wrap">
+                    <select id="month" name="month">
+                      <option value=""> </option>
+                    </select>
+                  </div>
+                  <div class="select-wrap">
+                    <select id="year" name="year">
+                      <option value=""> </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <label for="username">Username:</label>
+                <div class="input-box">
+                  <input id="username" name="username" type="text" />
+                  <span class="required-star">*</span>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <label for="email">E-mail:</label>
+                <div class="input-box">
+                  <input id="email" name="email" type="email" />
+                  <span class="required-star">*</span>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <label for="website">Website:</label>
+                <div class="input-box">
+                  <input id="website" name="website" type="url" />
+                  <span class="required-star">*</span>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <label for="password">Password:</label>
+                <div class="input-box">
+                  <input id="password" name="password" type="password" />
+                  <span class="required-star">*</span>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <label for="repassword">Re-password:</label>
+                <div class="input-box">
+                  <input id="repassword" name="repassword" type="password" />
+                  <span class="required-star">*</span>
+                </div>
+              </div>
+
+              <div class="terms-row">
+                <input type="checkbox" id="agree" name="agree" />
+                <label for="agree">I agree to the terms &amp; conditions.</label>
+              </div>
+
+              <div class="submit-row">
+                <button type="submit">Submit</button>
+              </div>
+            </form>
+
+            <div class="footer-signature">J Sharadvardhan Acharya 24070521027</div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

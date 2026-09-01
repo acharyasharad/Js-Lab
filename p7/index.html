@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #1d2733;
+            --muted: #697586;
+            --paper: #fffdf8;
+            --line: #e8e2d7;
+            --accent: #c6533c;
+            --accent-dark: #9f3928;
+            --shadow: 0 24px 60px rgba(76, 53, 35, 0.12);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 32px 16px;
+            color: var(--ink);
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #fff;
+        }
+
+        main {
+            width: min(100%, 620px);
+            padding: clamp(28px, 6vw, 54px);
+            background: var(--paper);
+            border: 1px solid rgba(117, 91, 66, 0.12);
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2.4rem, 8vw, 4.5rem);
+            line-height: 0.95;
+            font-weight: 400;
+        }
+
+        .add-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        input {
+            min-width: 0;
+            flex: 1;
+            padding: 13px 14px;
+            color: var(--ink);
+            background: #fff;
+            border: 1px solid var(--line);
+            font: 1rem Arial, sans-serif;
+        }
+
+        input:focus { outline: 2px solid rgba(198, 83, 60, 0.3); outline-offset: 2px; }
+
+        button {
+            border: 0;
+            cursor: pointer;
+            font: 700 0.82rem Arial, sans-serif;
+        }
+
+        .add-button {
+            padding: 0 20px;
+            color: #fff;
+            background: var(--accent);
+        }
+
+        .add-button:hover { background: var(--accent-dark); }
+
+        .todo-list {
+            display: grid;
+            gap: 11px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 15px 0;
+            border-top: 1px solid var(--line);
+            animation: appear 180ms ease-out;
+        }
+
+        .todo-text {
+            min-width: 0;
+            flex: 1;
+            overflow-wrap: anywhere;
+            font-size: 1.12rem;
+        }
+
+        .actions { display: flex; gap: 6px; }
+
+        .action-button {
+            padding: 8px 10px;
+            color: var(--muted);
+            background: transparent;
+        }
+
+        .action-button:hover { color: var(--accent); background: #f8eee9; }
+        .delete-button:hover { color: #a63838; background: #faeeee; }
+
+        .student-details {
+            margin: -20px 0 0;
+            color: var(--muted);
+            font: 0.85rem Arial, sans-serif;
+            text-align: center;
+        }
+
+        @keyframes appear {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .add-form { flex-direction: column; }
+            .add-button { min-height: 44px; }
+            .todo-item { align-items: flex-start; }
+            .actions { flex-shrink: 0; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>To-Do List</h1>
+
+        <form class="add-form" id="todo-form">
+            <input id="todo-input" type="text" maxlength="120" autocomplete="off" required>
+            <button class="add-button" type="submit">Add task</button>
+        </form>
+
+        <ul class="todo-list" id="todo-list"></ul>
+    </main>
+    <p class="student-details">J Sharadvardhan Acharya 24070521027</p>
+
+    <script>
+        const form = document.querySelector('#todo-form');
+        const input = document.querySelector('#todo-input');
+        const list = document.querySelector('#todo-list');
+        function addTodo(text) {
+            const item = document.createElement('li');
+            item.className = 'todo-item';
+            item.innerHTML = `
+                <span class="todo-text"></span>
+                <span class="actions">
+                    <button class="action-button edit-button" type="button">Edit</button>
+                    <button class="action-button delete-button" type="button">Delete</button>
+                </span>`;
+            item.querySelector('.todo-text').textContent = text;
+            list.append(item);
+        }
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const text = input.value.trim();
+            if (!text) return;
+            addTodo(text);
+            input.value = '';
+            input.focus();
+        });
+
+        list.addEventListener('click', (event) => {
+            const item = event.target.closest('.todo-item');
+            if (!item) return;
+
+            if (event.target.classList.contains('delete-button')) {
+                item.remove();
+            }
+
+            if (event.target.classList.contains('edit-button')) {
+                const todoText = item.querySelector('.todo-text');
+                const updatedText = window.prompt('Edit this task:', todoText.textContent);
+                if (updatedText !== null && updatedText.trim()) {
+                    todoText.textContent = updatedText.trim();
+                }
+            }
+        });
+
+    </script>
+
+</body>
+</html>
